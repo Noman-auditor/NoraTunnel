@@ -7,25 +7,12 @@ data class CoreCapability(
 )
 
 object CapabilityRegistry {
-
-    val registry = mapOf(
+    val registry: Map<Core, CoreCapability> = mapOf(
         Core.XRAY to CoreCapability(
             Core.XRAY,
-            setOf(
-                Protocol.VLESS,
-                Protocol.VMESS,
-                Protocol.TROJAN,
-                Protocol.SHADOWSOCKS
-            ),
-            setOf(
-                Transport.TCP,
-                Transport.WS,
-                Transport.GRPC,
-                Transport.QUIC,
-                Transport.H3
-            )
+            setOf(Protocol.VLESS, Protocol.VMESS, Protocol.TROJAN, Protocol.SHADOWSOCKS),
+            setOf(Transport.TCP, Transport.WS, Transport.GRPC, Transport.QUIC, Transport.TLS)
         ),
-
         Core.SINGBOX to CoreCapability(
             Core.SINGBOX,
             setOf(
@@ -36,38 +23,23 @@ object CapabilityRegistry {
                 Protocol.HYSTERIA2,
                 Protocol.TUIC
             ),
-            setOf(
-                Transport.TCP,
-                Transport.UDP,
-                Transport.WS,
-                Transport.GRPC,
-                Transport.H2,
-                Transport.QUIC,
-                Transport.H3
-            )
+            setOf(Transport.TCP, Transport.UDP, Transport.WS, Transport.QUIC)
         ),
-
         Core.WIREGUARD to CoreCapability(
             Core.WIREGUARD,
             setOf(Protocol.WIREGUARD),
             setOf(Transport.UDP)
         ),
-
         Core.OPENVPN to CoreCapability(
             Core.OPENVPN,
             setOf(Protocol.OPENVPN),
-            setOf(
-                Transport.TCP,
-                Transport.UDP
-            )
+            setOf(Transport.TCP, Transport.UDP)
         ),
-
         Core.IKEV2 to CoreCapability(
             Core.IKEV2,
             setOf(Protocol.IKEV2),
-            setOf(Transport.UDP)
+            setOf(Transport.UDP, Transport.TCP)
         ),
-
         Core.SSH to CoreCapability(
             Core.SSH,
             setOf(Protocol.SSH),
@@ -75,14 +47,8 @@ object CapabilityRegistry {
         )
     )
 
-    fun isValid(
-        core: Core,
-        protocol: Protocol,
-        transport: Transport
-    ): Boolean {
-        val capability = registry[core] ?: return false
-
-        return protocol in capability.protocols &&
-                transport in capability.transports
+    fun isValid(core: Core, protocol: Protocol, transport: Transport): Boolean {
+        val cap = registry[core] ?: return false
+        return protocol in cap.protocols && transport in cap.transports
     }
 }
