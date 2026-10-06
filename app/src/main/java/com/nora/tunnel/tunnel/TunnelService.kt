@@ -80,3 +80,4 @@ class TunnelService : VpnService() {
     }
     override fun onRevoke() { scope.launch { teardown() }; super.onRevoke() }
 }
+// in TunnelService.onStartCommand val nm = getSystemService(NotificationManager::class.java) TunnelNotification.createChannel(nm) startForeground(TunnelNotification.NOTIF_ID, TunnelNotification.build(this, "Connecting...", "0 B/s", "0 B/s"))
