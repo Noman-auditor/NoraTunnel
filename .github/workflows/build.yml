@@ -26,10 +26,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Verify Gradle wrapper exists
-  run: |
-    ls -la
-    test -f gradlew || (echo "gradlew not found" && exit 1)
-          
+        run: |
+          ls -la
+          test -f gradlew || (echo "gradlew not found" && exit 1)
 
       - name: Make gradlew executable
         run: chmod +x gradlew
