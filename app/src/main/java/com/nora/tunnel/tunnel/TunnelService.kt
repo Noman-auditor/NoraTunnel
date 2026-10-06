@@ -80,4 +80,10 @@ class TunnelService : VpnService() {
     }
     override fun onRevoke() { scope.launch { teardown() }; super.onRevoke() }
 }
+
+// Inside establishTunnel(profile: TunnelProfile) val builder = Builder() .addAddress("10.8.0.2", 32) .addRoute("0.0.0.0", 0) .addDnsServer(customDns ?: "1.1.1.1") .addDnsServer("8.8.8.8") .setSession("Nora Tunnel - ${profile.name}") .setMtu(1500) .setBlocking(false) // IPv6 handling - real if(ipv6Enabled) { builder.addAddress("fd00::2", 64) builder.addRoute("::", 0) } // else: no IPv6 route = IPv6 blocked // Per-app routing - real VpnService API when(appRoutingMode) { "SELECTED" -> allowedApps.forEach { pkg -> try { builder.addAllowedApplication(pkg) } catch(_: Exception){} } "EXCLUDED" -> disallowedApps.forEach { pkg -> try { builder.addDisallowedApplication(pkg) } catch(_: Exception){} } else -> {} // All apps = default } pfd = builder.establish() ?: throw IllegalStateException("VpnService not prepared - user denied permission")
+
+
+
+
 // in TunnelService.onStartCommand val nm = getSystemService(NotificationManager::class.java) TunnelNotification.createChannel(nm) startForeground(TunnelNotification.NOTIF_ID, TunnelNotification.build(this, "Connecting...", "0 B/s", "0 B/s"))
