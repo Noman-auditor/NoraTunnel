@@ -70,7 +70,7 @@ case "$( uname )" in
     ;;
 esac
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=$( cd -- "$( dirname -- "$0" )" &> /dev/null && pwd )
 
 # Disassociate from any parent shell if possible
 if [ "$$" != "1" ] ; then
