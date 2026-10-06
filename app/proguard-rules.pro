@@ -1,0 +1,1 @@
+-keep class com.nora.tunnel.data.database.** { *; } -keep class androidx.security.crypto.** { *; } -dontwarn org.conscrypt.**
