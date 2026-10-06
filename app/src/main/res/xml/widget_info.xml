@@ -1,0 +1,1 @@
+<!-- res/xml/widget_info.xml --> <appwidget-provider android:minWidth="250dp" android:minHeight="110dp" android:updatePeriodMillis="30000" android:widgetCategory="home_screen" />
